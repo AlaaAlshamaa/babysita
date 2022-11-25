@@ -1,4 +1,4 @@
-import 'package:testgit/SingUp/Utility.dart';
+import 'package:babysita/SingUp/Utility.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -36,7 +36,7 @@ class CodeUi extends StatefulWidget {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Text(
-                  "testgit",
+                  "BabySita",
                   style: TextStyle(
                     fontSize: 40,
                     color: Colors.red[300],
@@ -51,7 +51,7 @@ class CodeUi extends StatefulWidget {
                 ),
               ],
             ),
-            //Image(image: image) AssetImage("E:\Flutter Projects\testgit\img.jpg"),
+            //Image(image: image) AssetImage("E:\Flutter Projects\babysita\img.jpg"),
             Text(
               "التحقق من رقم الهاتف",
               style: TextStyle(

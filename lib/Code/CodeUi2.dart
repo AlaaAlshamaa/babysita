@@ -27,68 +27,102 @@ class _CodeUi2State extends State<CodeUi2> {
     return BlocProvider(
       create: (context) => CodeBloc(),
       child: Scaffold(
-          body: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-            IconButton(
-                onPressed: () {
-                  context.read<CodeBloc>().add(Getphone());
-                },
+          body: SingleChildScrollView(
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              IconButton(
+                  onPressed: () {
+                    context.read<CodeBloc>().add(Getphone());
+                  },
+                  icon: Icon(
+                    Icons.person_outline,
+                  )),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Text(
+                    "BabySita",
+                    style: TextStyle(
+                      fontSize: 40,
+                      color: Colors.red[300],
+                    ),
+                  ),
+                  Text(
+                    "حساب جديد",
+                    style: TextStyle(
+                      fontSize: 40,
+                      color: Colors.grey[600],
+                    ),
+                  ),
+                ],
+              ),
+              Image.asset('assets/images/img.jpg'),
+              Text(
+                "التحقق من رقم الهاتف",
+                style: TextStyle(
+                  fontSize: 30,
+                  color: Colors.grey[600],
+                ),
+              ),
+              Text(
+                "تم إرسال كود مكون من 6 محارف إلى الرقم",
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.grey[400],
+                ),
+              ),
+              Text(
+                phone,
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.grey[600],
+                ),
+              ),
+              Row(
+                children: [
+                  TextField(
+                    decoration: InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          width: 5, //<-- SEE HERE
+                          color: Colors.greenAccent,
+                        ),
+                        borderRadius: BorderRadius.circular(50.0),
+                      ),
+                    ),
+                  ),
+                  TextField(
+                    decoration: InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            width: 3,
+                            color: Colors.lightGreenAccent), //<-- SEE HERE
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              TextField(
+                controller: codeController,
+              ),
+              FloatingActionButton.extended(
+                extendedIconLabelSpacing: 200,
+                backgroundColor: Colors.red[300],
+
+                label: Text('إنشاء الحساب'), // <-- Text
                 icon: Icon(
-                  Icons.person_outline,
-                )),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Text(
-                  "testgit",
-                  style: TextStyle(
-                    fontSize: 40,
-                    color: Colors.red[300],
-                  ),
+                  // <-- Icon
+                  Icons.next_plan,
+                  size: 24.0,
                 ),
-                Text(
-                  "حساب جديد",
-                  style: TextStyle(
-                    fontSize: 40,
-                    color: Colors.grey[600],
-                  ),
-                ),
-              ],
-            ),
-            Image.asset("E:\Flutter Projects\testgit\img.jpg"),
-            Text(
-              "التحقق من رقم الهاتف",
-              style: TextStyle(
-                fontSize: 30,
-                color: Colors.grey[600],
-              ),
-            ),
-            Text(
-              "تم إرسال كود مكون من 6 محارف إلى الرقم",
-              style: TextStyle(
-                fontSize: 20,
-                color: Colors.grey[400],
-              ),
-            ),
-            Text(
-              phone,
-              style: TextStyle(
-                fontSize: 20,
-                color: Colors.grey[400],
-              ),
-            ),
-            TextField(
-              controller: codeController,
-            ),
-            ElevatedButton(
-              onPressed: () {
-                checkcode(codeController.text);
-              },
-              child: Text('تم '),
-            )
-          ])),
+                onPressed: () {
+                  checkcode(codeController.text);
+                },
+              )
+            ]),
+      )),
     );
   }
 }

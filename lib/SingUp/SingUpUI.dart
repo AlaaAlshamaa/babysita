@@ -28,7 +28,7 @@ class SingUpUI extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Text(
-                      "testgit",
+                      "BabySita",
                       style: TextStyle(
                         fontSize: 40,
                         color: Colors.red[300],
