@@ -1,7 +1,10 @@
+import 'package:testgit/3/HomePage.dart';
 import 'package:testgit/SingUp/bloc/singup_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 
+import '3/CartModel.dart';
 import 'SingUp/SingUpUI.dart';
 import 'SingUp/Utility.dart';
 
@@ -9,7 +12,10 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await MySharedPreferences.init();
-  runApp(MyApp());
+  runApp(ChangeNotifierProvider(
+    create: (context) => Cart(),
+    child: MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -21,7 +27,8 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        // home: SingUpUI(),
+        // home: HomePage(),
+        debugShowCheckedModeBanner: false,
         home: BlocProvider(
           create: (_) => SingupBloc(),
           child: SingUpUI(),

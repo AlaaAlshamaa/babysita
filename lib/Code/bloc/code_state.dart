@@ -6,7 +6,7 @@ abstract class CodeState {}
 class CodeInitial extends CodeState {}
 
 class PhoneState extends CodeState {
-  Future<String>? phone;
+  String phone;
 
   PhoneState({required this.phone});
 }

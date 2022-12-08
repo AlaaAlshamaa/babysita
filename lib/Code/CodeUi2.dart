@@ -1,6 +1,8 @@
+import 'package:testgit/3/Mycart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../3/HomePage.dart';
 import '../SingUp/Utility.dart';
 import 'bloc/code_bloc.dart';
 
@@ -43,7 +45,7 @@ class _CodeUi2State extends State<CodeUi2> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Text(
-                    "BabySita",
+                    "Testgit",
                     style: TextStyle(
                       fontSize: 40,
                       color: Colors.red[300],
@@ -80,58 +82,60 @@ class _CodeUi2State extends State<CodeUi2> {
                   color: Colors.grey[600],
                 ),
               ),
-              Row(
-                children: [
-                  TextField(
-                    decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          width: 5, //<-- SEE HERE
-                          color: Colors.greenAccent,
-                        ),
-                        borderRadius: BorderRadius.circular(50.0),
-                      ),
-                    ),
-                  ),
-                  TextField(
-                    decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                            width: 3,
-                            color: Colors.lightGreenAccent), //<-- SEE HERE
-                      ),
-                    ),
-                  ),
-                ],
-              ),
               TextField(
                 controller: codeController,
+                decoration: InputDecoration(
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      width: 3, //<-- SEE HERE
+                      color: Colors.grey,
+                    ),
+                    borderRadius: BorderRadius.circular(50.0),
+                  ),
+                ),
               ),
               FloatingActionButton.extended(
-                extendedIconLabelSpacing: 200,
-                backgroundColor: Colors.red[300],
+                  extendedIconLabelSpacing: 200,
+                  backgroundColor: Colors.red[300],
+                  label: Text('إنشاء الحساب'), // <-- Text
+                  icon: Icon(
+                    // <-- Icon
+                    Icons.next_plan,
+                    size: 24.0,
+                  ),
+                  onPressed: () {
+                    if (checkcode(codeController.text)) {
+                      const snackBar = SnackBar(
+                        content: Text('تم تفعيل الحساب'),
+                      );
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
 
-                label: Text('إنشاء الحساب'), // <-- Text
-                icon: Icon(
-                  // <-- Icon
-                  Icons.next_plan,
-                  size: 24.0,
-                ),
-                onPressed: () {
-                  checkcode(codeController.text);
-                },
-              )
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => HomePage()),
+                      );
+                    } else {
+                      const snackBar = SnackBar(
+                        content: Text('كود خاطئ'),
+                      );
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    }
+                    ;
+                  })
             ]),
       )),
     );
   }
 }
 
-void checkcode(String code2) {
+bool checkcode(String code2) {
   String testcode = "123456";
 
-  if (code2 == testcode)
+  if (code2 == testcode) {
     print("okkkkk coooode");
-  else
+    return true;
+  } else {
     print("errroooooorrrrrrreeeeeeee coooode");
+    return false;
+  }
 }

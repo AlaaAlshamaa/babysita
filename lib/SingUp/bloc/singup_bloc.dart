@@ -5,7 +5,7 @@ import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:meta/meta.dart';
-import 'package:babysita/SingUp/Utility.dart';
+import 'package:testgit/SingUp/Utility.dart';
 
 import '../SingUpModel.dart';
 
