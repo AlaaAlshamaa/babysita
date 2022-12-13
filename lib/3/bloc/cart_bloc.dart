@@ -37,7 +37,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
 Future<int> _buy(Cart order) async {
   var response = await http.get(
-      Uri.http('https://eva.webmyidea.com/api/v1', '/orders'),
+      Uri.http('https://eva.webmyidea.com/api/v1/register', '/orders'),
       headers: order.getListMap(order.basketItems));
 
   dynamic _response = response.body.runtimeType;

@@ -17,69 +17,73 @@ class _MycartState extends State<Mycart> {
   Widget build(BuildContext context) {
     return Consumer<Cart>(
       builder: (context, cart, child) {
-        return Scaffold(
-          appBar: AppBar(
-            backgroundColor: Colors.red[300],
-            title: Text('سلة المشتريات'),
-          ),
-          body: cart.basketItems.length == 0
-              ? Text('ليس لديك أي مشتريات بعد..')
-              : ListView.builder(
-                  itemCount: cart.basketItems.length,
-                  itemBuilder: (context, index) {
-                    return Card(
-                      child: ListTile(
-                        title: Text(cart.basketItems[index].title),
-                        subtitle:
-                            Text(cart.basketItems[index].price.toString()),
-                        leading:
-                            Text(cart.basketItems[index].quantity.toString()),
-                        trailing: Wrap(
-                          children: [
-                            IconButton(
-                              icon: Icon(Icons.add),
-                              onPressed: () {
-                                cart.addone(cart.basketItems[index]);
-                              },
-                            ),
-                            IconButton(
-                              icon: Icon(Icons.minimize),
-                              onPressed: () {
-                                cart.minimize(cart.basketItems[index]);
-                              },
-                            ),
-                            IconButton(
-                              icon: Icon(Icons.delete),
-                              onPressed: () {
-                                cart.remove(cart.basketItems[index]);
-                              },
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
-                  },
+        return Provider<CartBloc>(
+            create: (_) => CartBloc(),
+            builder: (context, child) {
+              return Scaffold(
+                appBar: AppBar(
+                  backgroundColor: Colors.red[300],
+                  title: Text('سلة المشتريات'),
                 ),
-          floatingActionButton: Center(
-            child: FloatingActionButton.extended(
-              extendedIconLabelSpacing: 30,
-              backgroundColor: Colors.red[300],
-              label: Text('[\$ ${cart.totalPrice}]',
-                  style: TextStyle(
-                    fontSize: 24,
-                  )), // <-- Text
-              icon: Icon(
-                // <-- Icon
-                Icons.shopping_bag_outlined,
-                size: 28.0,
-              ),
-              onPressed: () {
-                print("serv");
-                context.read<CartBloc>().add(AddCart(order: cart));
-              },
-            ),
-          ),
-        );
+                body: cart.basketItems.length == 0
+                    ? Text('ليس لديك أي مشتريات بعد..')
+                    : ListView.builder(
+                        itemCount: cart.basketItems.length,
+                        itemBuilder: (context, index) {
+                          return Card(
+                            child: ListTile(
+                              title: Text(cart.basketItems[index].title),
+                              subtitle: Text(
+                                  cart.basketItems[index].price.toString()),
+                              leading: Text(
+                                  cart.basketItems[index].quantity.toString()),
+                              trailing: Wrap(
+                                children: [
+                                  IconButton(
+                                    icon: Icon(Icons.add),
+                                    onPressed: () {
+                                      cart.addone(cart.basketItems[index]);
+                                    },
+                                  ),
+                                  IconButton(
+                                    icon: Icon(Icons.minimize),
+                                    onPressed: () {
+                                      cart.minimize(cart.basketItems[index]);
+                                    },
+                                  ),
+                                  IconButton(
+                                    icon: Icon(Icons.delete),
+                                    onPressed: () {
+                                      cart.remove(cart.basketItems[index]);
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                floatingActionButton: Center(
+                  child: FloatingActionButton.extended(
+                    extendedIconLabelSpacing: 30,
+                    backgroundColor: Colors.red[300],
+                    label: Text('[\$ ${cart.totalPrice}]',
+                        style: TextStyle(
+                          fontSize: 24,
+                        )), // <-- Text
+                    icon: Icon(
+                      // <-- Icon
+                      Icons.shopping_bag_outlined,
+                      size: 28.0,
+                    ),
+                    onPressed: () {
+                      print("serv");
+                      context.read<CartBloc>().add(AddCart(order: cart));
+                    },
+                  ),
+                ),
+              );
+            });
       },
     );
   }
