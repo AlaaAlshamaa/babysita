@@ -45,7 +45,7 @@ class _CodeUi2State extends State<CodeUi2> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Text(
-                    "Testgit",
+                    "testgit",
                     style: TextStyle(
                       fontSize: 40,
                       color: Colors.red[300],

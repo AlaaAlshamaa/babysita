@@ -36,7 +36,7 @@ class CodeUi extends StatefulWidget {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Text(
-                  "Testgit",
+                  "testgit",
                   style: TextStyle(
                     fontSize: 40,
                     color: Colors.red[300],

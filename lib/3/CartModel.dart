@@ -10,7 +10,11 @@ class Cart extends ChangeNotifier {
   double _totalPrice = 0.0;
 
   void add(Item item) {
-    _items.add(item);
+    if (_items.contains(item)) {
+      item.quantity++;
+    } else {
+      _items.add(item);
+    }
     _totalPrice += item.price;
     notifyListeners();
   }
@@ -18,6 +22,19 @@ class Cart extends ChangeNotifier {
   void remove(Item item) {
     _totalPrice -= item.price;
     _items.remove(item);
+    notifyListeners();
+  }
+
+  void minimize(Item item) {
+    _totalPrice -= item.price;
+    item.quantity--;
+    if (item.quantity == 0) remove(item);
+    notifyListeners();
+  }
+
+  void addone(Item item) {
+    _totalPrice += item.price;
+    item.quantity++;
     notifyListeners();
   }
 
@@ -31,5 +48,17 @@ class Cart extends ChangeNotifier {
 
   List<Item> get basketItems {
     return _items;
+  }
+
+// this helper method helps convert to a list of Map
+  dynamic getListMap(List<Item> items) {
+    if (items == null) {
+      return null;
+    }
+    List<Map<String, dynamic>> cartItems = [];
+    items.forEach((element) {
+      cartItems.add(element.toMap());
+    });
+    return cartItems;
   }
 }

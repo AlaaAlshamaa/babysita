@@ -17,9 +17,10 @@ class _HomePageState extends State<HomePage> {
     Item(
       title: 'T-SHIRT ',
       price: 500.0,
+      quantity: 1,
     ),
-    Item(title: 'SHOES ', price: 400.0),
-    Item(title: 'PRASHOT', price: 40.0),
+    Item(title: 'SHOES ', price: 400.0, quantity: 1),
+    Item(title: 'PRASHOT', price: 40.0, quantity: 1),
   ];
   @override
   Widget build(BuildContext context) {
