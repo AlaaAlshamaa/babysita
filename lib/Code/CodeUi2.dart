@@ -28,102 +28,103 @@ class _CodeUi2State extends State<CodeUi2> {
 
     return BlocProvider(
       create: (context) => CodeBloc(),
-      child: Scaffold(
-          body: SingleChildScrollView(
-        child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              IconButton(
-                  onPressed: () {
-                    context.read<CodeBloc>().add(Getphone());
-                  },
-                  icon: Icon(
-                    Icons.person_outline,
-                  )),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Text(
-                    "testgit",
-                    style: TextStyle(
-                      fontSize: 40,
-                      color: Colors.red[300],
+      child: Builder(builder: (context) {
+        return Scaffold(
+            body: SingleChildScrollView(
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Text(
+                      "testgit",
+                      style: TextStyle(
+                        fontSize: 40,
+                        color: Colors.red[300],
+                      ),
+                    ),
+                    Text(
+                      "حساب جديد",
+                      style: TextStyle(
+                        fontSize: 40,
+                        color: Colors.grey[600],
+                      ),
+                    ),
+                  ],
+                ),
+                Image.asset('assets/images/img.jpg'),
+                Text(
+                  "التحقق من رقم الهاتف",
+                  style: TextStyle(
+                    fontSize: 30,
+                    color: Colors.grey[600],
+                  ),
+                ),
+                Text(
+                  "تم إرسال كود مكون من 6 محارف إلى الرقم",
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.grey[400],
+                  ),
+                ),
+                Text(
+                  phone,
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.grey[600],
+                  ),
+                ),
+                TextField(
+                  controller: codeController,
+                  decoration: InputDecoration(
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        width: 3, //<-- SEE HERE
+                        color: Colors.grey,
+                      ),
+                      borderRadius: BorderRadius.circular(50.0),
                     ),
                   ),
-                  Text(
-                    "حساب جديد",
-                    style: TextStyle(
-                      fontSize: 40,
-                      color: Colors.grey[600],
-                    ),
-                  ),
-                ],
-              ),
-              Image.asset('assets/images/img.jpg'),
-              Text(
-                "التحقق من رقم الهاتف",
-                style: TextStyle(
-                  fontSize: 30,
-                  color: Colors.grey[600],
                 ),
-              ),
-              Text(
-                "تم إرسال كود مكون من 6 محارف إلى الرقم",
-                style: TextStyle(
-                  fontSize: 20,
-                  color: Colors.grey[400],
-                ),
-              ),
-              Text(
-                phone,
-                style: TextStyle(
-                  fontSize: 20,
-                  color: Colors.grey[600],
-                ),
-              ),
-              TextField(
-                controller: codeController,
-                decoration: InputDecoration(
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      width: 3, //<-- SEE HERE
-                      color: Colors.grey,
-                    ),
-                    borderRadius: BorderRadius.circular(50.0),
-                  ),
-                ),
-              ),
-              FloatingActionButton.extended(
-                  extendedIconLabelSpacing: 200,
-                  backgroundColor: Colors.red[300],
-                  label: Text('إنشاء الحساب'), // <-- Text
-                  icon: Icon(
-                    // <-- Icon
-                    Icons.next_plan,
-                    size: 24.0,
-                  ),
-                  onPressed: () {
-                    if (checkcode(codeController.text)) {
+                BlocListener<CodeBloc, CodeState>(
+                  listener: (context, state) {
+                    if (state is Okcode) {
                       const snackBar = SnackBar(
                         content: Text('تم تفعيل الحساب'),
                       );
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
 
-                      Navigator.push(
+                      Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(builder: (context) => HomePage()),
                       );
-                    } else {
+                    } else if (state is Errorcode) {
                       const snackBar = SnackBar(
                         content: Text('كود خاطئ'),
                       );
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
                     }
-                    ;
-                  })
-            ]),
-      )),
+                  },
+                  child: FloatingActionButton.extended(
+                      extendedIconLabelSpacing: 200,
+                      backgroundColor: Colors.red[300],
+                      label: Text('إنشاء الحساب'), // <-- Text
+                      icon: Icon(
+                        // <-- Icon
+                        Icons.next_plan,
+                        size: 24.0,
+                      ),
+                      onPressed: () {
+                        context
+                            .read<CodeBloc>()
+                            .add(Entercode(e_code: codeController.text));
+                      }),
+                )
+              ]),
+        ));
+      }),
     );
   }
 }

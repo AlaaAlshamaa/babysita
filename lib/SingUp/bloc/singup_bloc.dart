@@ -64,7 +64,7 @@ Future<bool> _singup(String name, String phone_number, String password,
       return dioClient;
     };
     final response = await dio.post(
-      'https://eva.webmyidea.com/api/v1/register',
+      'http://192.168.43.123:3000/api/signup',
       queryParameters: request.toMap(),
       data: {
         name: name,
@@ -77,6 +77,13 @@ Future<bool> _singup(String name, String phone_number, String password,
           validateStatus: (status) {
             return status! < 400;
           }),
+    );
+    print(response.data);
+
+    print(response.data["code"]);
+
+    MySharedPreferences.setcode(
+      response.data["code"],
     );
 
     print("oooooooooooooook");

@@ -27,6 +27,7 @@ class MySharedPreferences {
   static SharedPreferences? _preferences;
 
   static const _keyphone = '00000000';
+  static const _keycode = '00000000';
 
   static Future init() async =>
       _preferences = await SharedPreferences.getInstance();
@@ -35,4 +36,9 @@ class MySharedPreferences {
       await _preferences?.setString(_keyphone, phone);
 
   static String? getphone() => _preferences?.getString(_keyphone);
+
+  static Future setcode(String phone) async =>
+      await _preferences?.setString(_keycode, phone);
+
+  static String? getcode() => _preferences?.getString(_keycode);
 }

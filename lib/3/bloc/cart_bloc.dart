@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
 
@@ -15,8 +16,9 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     on<AddCart>((event, emit) async {
       emit(Loading());
       print(state);
-      int x = await _buy(event.order);
-      if (x == 200) {
+      print(event.order);
+      bool x = await _buy(event.order);
+      if (x) {
         emit(Ok());
         print(state);
       } else
@@ -35,14 +37,35 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
 // Services
 
-Future<int> _buy(Cart order) async {
-  var response = await http.get(
-      Uri.http('https://eva.webmyidea.com/api/v1/register', '/orders'),
-      headers: order.getListMap(order.basketItems));
+Future<bool> _buy(Cart order) async {
+  try {
+    var dio = Dio();
 
-  dynamic _response = response.body.runtimeType;
+    print((order.basketItems));
+    print(order.getListMap(order.basketItems));
+    print(order.getMapListMap(order.basketItems));
 
-  //return _response;
+    Map<String, dynamic> _bask = {
+      "basket": [order.getListMap(order.basketItems)]
+    };
 
-  return 200;
+    print("---");
+    print(_bask);
+
+    final response = await dio.get(('http://192.168.43.123:3000/api/order'),
+        queryParameters: _bask);
+
+    //dynamic _response = response.data.runtimeType;
+    print(response.data);
+    print(response.runtimeType);
+
+    print("oooooooooooooook");
+    return true;
+  } catch (e) {
+    // TODO
+
+    print("!!!!!!!!!!!!!!!");
+    print(e);
+    return false;
+  }
 }

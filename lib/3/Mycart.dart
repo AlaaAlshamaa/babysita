@@ -3,6 +3,8 @@ import 'package:testgit/3/CartModel.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'CartModel.dart';
+import 'HomePage.dart';
 import 'bloc/cart_bloc.dart';
 
 class Mycart extends StatefulWidget {
@@ -64,22 +66,42 @@ class _MycartState extends State<Mycart> {
                         },
                       ),
                 floatingActionButton: Center(
-                  child: FloatingActionButton.extended(
-                    extendedIconLabelSpacing: 30,
-                    backgroundColor: Colors.red[300],
-                    label: Text('[\$ ${cart.totalPrice}]',
-                        style: TextStyle(
-                          fontSize: 24,
-                        )), // <-- Text
-                    icon: Icon(
-                      // <-- Icon
-                      Icons.shopping_bag_outlined,
-                      size: 28.0,
-                    ),
-                    onPressed: () {
-                      print("serv");
-                      context.read<CartBloc>().add(AddCart(order: cart));
+                  child: BlocListener<CartBloc, CartState>(
+                    listener: (context, state) {
+                      if (state is Ok) {
+                        const snackBar = SnackBar(
+                          content: Text('تم تأكيد الطلب'),
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => HomePage()),
+                        );
+                      } else if (state is Error) {
+                        const snackBar = SnackBar(
+                          content: Text('حدثث خطأ'),
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      }
                     },
+                    child: FloatingActionButton.extended(
+                      extendedIconLabelSpacing: 30,
+                      backgroundColor: Colors.red[300],
+                      label: Text('[ ${cart.totalPrice}]',
+                          style: TextStyle(
+                            fontSize: 24,
+                          )), // <-- Text
+                      icon: Icon(
+                        // <-- Icon
+                        Icons.shopping_bag_outlined,
+                        size: 28.0,
+                      ),
+                      onPressed: () {
+                        print("serv");
+                        context.read<CartBloc>().add(AddCart(order: cart));
+                      },
+                    ),
                   ),
                 ),
               );

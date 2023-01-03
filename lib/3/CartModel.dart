@@ -61,4 +61,16 @@ class Cart extends ChangeNotifier {
     });
     return cartItems;
   }
+
+// this helper method helps convert to a list of Map to Map
+  dynamic getMapListMap(List<Item> items) {
+    if (items == null) {
+      return null;
+    }
+    List<Map<String, dynamic>> cartItems = [];
+    items.forEach((element) {
+      cartItems.add(element.toMap());
+    });
+    return cartItems.asMap();
+  }
 }

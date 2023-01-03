@@ -15,6 +15,18 @@ class CodeBloc extends Bloc<CodeEvent, CodeState> {
       //emit(PhoneState(phone: MySharedPreferences.instance.getStringValue("phone")));
       print(state);
     });
+    on<Entercode>((event, emit) async {
+      emit(Loading());
+
+      String? be_code = MySharedPreferences.getcode();
+      if (be_code == event.e_code) {
+        emit(Okcode());
+        print(state);
+      } else {
+        emit(Errorcode());
+        print(state);
+      }
+    });
   }
 
   @override

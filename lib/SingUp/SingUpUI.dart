@@ -141,9 +141,10 @@ class SingUpUI extends StatelessWidget {
                       phoneController.text,
                     );
 
-                    Navigator.push(
+                    Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (context) => CodeUi2()),
+                      MaterialPageRoute(
+                          builder: (BuildContext context) => CodeUi2()),
                     );
                   },
                 ),
